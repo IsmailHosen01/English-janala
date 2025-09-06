@@ -3,6 +3,12 @@ const createElement = (arr) => {
     return (htmlElements.join(" "));
 }
 
+function pronounceWord(word) {
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = "en-EN"; // English
+    window.speechSynthesis.speak(utterance);
+}
+
 const manageSpinner = (status) => {
     if (status === true) {
         document.getElementById('spinner').classList.remove('hidden');
@@ -98,7 +104,7 @@ const displayLevelWords = (words) => {
 
             <div class=" flex justify-between items-center mt-8">
                 <button onclick="loadWordDetails(${word.id})" class="btn bg-[#1a91ff1a] hover:bg-[#1a91ff80]"><i class="fa-solid fa-circle-info"></i></button>
-                <button class="btn bg-[#1a91ff1a] hover:bg-[#1a91ff80]"><i class="fa-solid fa-volume-high"></i></button>
+                <button onclick="pronounceWord('${word.word}')" class="btn bg-[#1a91ff1a] hover:bg-[#1a91ff80]"><i class="fa-solid fa-volume-high"></i></button>
             </div>
         </div>
         `
@@ -129,7 +135,7 @@ document.getElementById('btn-search').addEventListener('click', () => {
     for (const btn of lessonBtns) {
         btn.classList.remove('text-white', 'bg-[#422AD5]');
     }
-    
+
     const searchValue = document.getElementById('input-search').value.trim().toLowerCase();
     console.log(searchValue);
 
